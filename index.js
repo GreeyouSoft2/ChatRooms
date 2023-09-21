@@ -7,15 +7,21 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/chat.html');
 });
 
-
+var name = [];
 var messages = [];
 var users = [];
 
 io.on('connection', function(socket){
 
   // サーバー側のメッセージリストをクライアント側に送る（emit）
+  socket.emit('init-chat', names);
   socket.emit('init-chat', messages);
   // クライアント側から送られたメッセージを受け取り、全クライアントに送る（emit）
+  socket.on('c2s-name', function(name) {
+    var newName = cna;
+    message.push(newName);
+    io.emit('s2c-name', newname);
+  });
   socket.on('c2s-msg', function(msg) {
       var newMessage = msg;
       messages.push(newMessage);
